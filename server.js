@@ -6,6 +6,7 @@ const cors = require('cors');
 const authRoutes = require('./routes/auth');
 const birthInfoRoutes = require('./routes/birthInfo');
 const deathInfoRoutes = require('./routes/deathInfo');
+const userRoutes = require('./routes/user');
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 app.use('/api/auth', authRoutes);
 app.use('/api/birth-info', birthInfoRoutes);
 app.use('/api/death-info', deathInfoRoutes);
+app.use('/api/users', userRoutes);
 //app.use('/api/birth-death-info', birthDeathRoutes);
 
 const port = process.env.PORT || 5000;
