@@ -5,6 +5,6 @@ const router = express.Router();
 
 // Remove the protect and authorize middleware for POST route
 router.post('/submit-birth', submitBirthInfo); // Open to all users
-router.get('/birth-info', protect, authorize('union', 'upazila', 'it'), getBirthInfo); // Keep authentication for GET route
+router.get('/birth-info', protect, authorize('unionAdmin', 'uno', 'sa'), getBirthInfo); // Keep authentication for GET route
 
 module.exports = router;
