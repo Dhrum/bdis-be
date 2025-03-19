@@ -38,8 +38,15 @@ exports.login = async (req, res) => {
   const isPasswordValid = await user.matchPassword(password);
   if (!isPasswordValid) return res.status(400).json({ message: 'Invalid username or password' });
 
+console.log(username);
+
   const token = generateToken(user);
-  res.json({ token, role: user.role, union: user.union || null });
+  res.json({
+    token,
+    role: user.role,
+    union: user.union || null,
+    username: username, // Return username
+  });
 };
 
 // Ensure SA exists on server start
