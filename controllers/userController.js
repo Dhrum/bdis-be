@@ -21,38 +21,39 @@ exports.getUsers = async (req, res) => {
 // Create User (SA only)
 exports.createUser = async (req, res) => {
   try {
-    const { username, password, role, union } = req.body;
+      const { username, password, role, union } = req.body;
 
-    // Ensure required fields are present
-    if (!username || !role || !password) {
-      return res.status(400).json({ message: 'Username, Role, and Password are required.' });
-    }
-    if (role === 'unionAdmin' && !union) {
-      return res.status(400).json({ message: 'Union is required for Union Admin.' });
-    }
+      // ✅ Ensure required fields are present
+      if (!username || !password || !role) {
+          return res.status(400).json({ message: "Username, password, and role are required." });
+      }
+      if (role === "unionAdmin" && !union) {
+          return res.status(400).json({ message: "Union is required for Union Admin." });
+      }
 
-    // Check for duplicate username
-    const existingUser = await User.findOne({ username });
-    if (existingUser) {
-      return res.status(400).json({ message: 'Username already exists.' });
-    }
+      // ✅ Check for duplicate username
+      const existingUser = await User.findOne({ username });
+      if (existingUser) {
+          return res.status(400).json({ message: "Username already exists." });
+      }
 
-    // Hash the password before saving
-    const hashedPassword = await bcrypt.hash(password, 10);
+      // Hash the password before saving it
+      const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create new user
-    const newUser = new User({
-      username,
-      password: hashedPassword, // Store hashed password
-      role,
-      union: role === 'unionAdmin' ? union : undefined,
-    });
+      // ✅ Create user
+      const newUser = new User({
+          username,
+          password: hashedPassword, // Save the hashed password
+          role,
+          union: role === "unionAdmin" ? union : undefined
+      });
 
-    await newUser.save();
-    res.status(201).json({ message: 'User created successfully.' });
+      await newUser.save();
+
+      res.status(201).json({ message: "User created successfully." });
   } catch (error) {
-    console.error('Error creating user:', error);
-    res.status(500).json({ message: 'Internal server error.', error: error.message });
+      console.error("Error creating user:", error);
+      res.status(500).json({ message: "Internal server error.", error: error.message });
   }
 };
   

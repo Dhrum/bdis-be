@@ -20,6 +20,7 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
   .catch((err) => console.log(err));
 
 // Routes
+
 app.use('/api/auth', authRoutes);
 app.use('/api/birth-info', birthInfoRoutes);
 app.use('/api/death-info', deathInfoRoutes);
